@@ -111,10 +111,17 @@ export default function Header() {
             >
               <Button
                 onClick={() => {
-                  router.push(`/user/${user.id}`);
+                  router.push(`/user/messages`);
                 }}
               >
-                Dashboard
+                Messages
+              </Button>
+              <Button
+                onClick={() => {
+                  router.push(`/user/posts`);
+                }}
+              >
+                Posts
               </Button>
               <Button
                 onClick={() => {

@@ -1,16 +1,17 @@
 import { PostWithUsername, Posts } from "..";
-import { Flex, Box } from "@chakra-ui/react";
+import { Flex, Box, Button } from "@chakra-ui/react";
 import date from "date-and-time";
+import { useState } from "react";
 
 export default function PostsView({
   posts,
-  onPostClick,
-  activePost,
+  onReply,
 }: {
   posts: Posts;
-  onPostClick: (arg: PostWithUsername) => void;
-  activePost: PostWithUsername | null;
+  onReply: (arg: PostWithUsername) => void;
 }) {
+  const [showFull, setShowFull] = useState({ show: false, id: "" });
+  const { show, id } = showFull;
   return (
     <>
       {posts.map(el => {
@@ -20,30 +21,35 @@ export default function PostsView({
           <Flex
             flexDirection={"column"}
             key={el.id}
+            justifyContent={"space-around"}
             bg={"white"}
+            minH={"22.5rem"}
+            maxH={el.id === id ? "unset" : "22.5rem"}
             marginBottom={"1rem"}
             p={"2rem"}
             borderRadius={"10px"}
             transition={"all .3s"}
             border={"5px solid"}
-            borderColor={activePost?.id === el.id ? "green.400" : "blue.400"}
+            borderColor={"blue.400"}
             _hover={{
               transform: "translate(1%, -1%)",
             }}
             cursor={"pointer"}
-            onClick={() => onPostClick(el)}
+            onClick={() => setShowFull({ show: !show, id: el.id })}
           >
             <Box
               as="h3"
               fontSize={"1.1rem"}
               paddingBottom={"1rem"}
               fontWeight={"900"}
-              color={activePost?.id === el.id ? "green.400" : "blue.400"}
+              color={"blue.400"}
             >
               {el.title}
             </Box>
             <Box paddingBottom={"1rem"}>
-              {el.content.substring(0, 200)} . . .{" "}
+              {el.id === id && show
+                ? el.content
+                : el.content.substring(0, 200) + "..."}
             </Box>
             <Flex justifyContent={"space-between"}>
               <Box fontSize={".8rem"}>
@@ -52,6 +58,14 @@ export default function PostsView({
               </Box>
               <Box fontSize={".8rem"}>{el.author.username}</Box>
             </Flex>
+
+            <Button
+              onClick={() => onReply(el)}
+              gridColumn={"2"}
+              fontSize={".8rem"}
+            >
+              Reply
+            </Button>
           </Flex>
         );
       })}

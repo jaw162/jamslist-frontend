@@ -2,12 +2,11 @@ import { GetServerSidePropsContext } from "next";
 import { API_URL } from "@/config";
 import Layout from "@/components/Layout";
 import { CountyPageResponse, PostWithUsername } from "..";
-import { Box, Button, Container, Flex } from "@chakra-ui/react";
+import { Button, Container, Flex } from "@chakra-ui/react";
 import BreadcrumbsCounty from "@/components/Breadcrumbs[County]";
 import PostsView from "@/components/PostsView";
 import ReplyToPostModal from "@/components/ReplyToPostModal";
 import { useState, useCallback } from "react";
-import ShowFullPost from "@/components/ShowFullPost";
 import { useRouter } from "next/router";
 import Paginate from "@/components/Paginate";
 import PostListingModal from "@/components/PostListingModal";
@@ -18,7 +17,6 @@ export default function CountyPage({
   countyData: CountyPageResponse;
 }) {
   const [postModalOpen, setPostModalOpen] = useState(false);
-  const [activePost, setActivePost] = useState<PostWithUsername | null>(null);
   const [replyWindow, setReplyWindowClicked] = useState(false);
   const [message, setMessage] = useState<{
     userToId: string;
@@ -32,10 +30,6 @@ export default function CountyPage({
 
   const router = useRouter();
   const page = router.query.page as string;
-
-  const onPostClick = useCallback((el: PostWithUsername) => {
-    setActivePost(el);
-  }, []);
 
   const onReplyClick = useCallback((el: PostWithUsername) => {
     setMessage(m => ({ ...m, userToId: el.authorId, title: el.title }));
@@ -92,24 +86,16 @@ export default function CountyPage({
         </Flex>
         <Container
           display={"grid"}
-          gridTemplateColumns={"repeat(2,1fr)"}
+          gridTemplateColumns={{
+            base: "repeat(1,1fr)",
+            md: "repeat(2,1fr)",
+          }}
           maxW={"maxWidth"}
           p={0}
           color={"blackAlpha.900"}
           gap={"1rem"}
         >
-          <Container>
-            <PostsView
-              activePost={activePost}
-              onPostClick={onPostClick}
-              posts={countyData.post}
-            />
-          </Container>
-          <Container position={"relative"} p={"0 1rem"}>
-            {activePost ? (
-              <ShowFullPost onReply={onReplyClick} post={activePost} />
-            ) : null}
-          </Container>
+          <PostsView onReply={onReplyClick} posts={countyData.post} />
           <Flex
             flexDir={"row"}
             alignItems={"center"}
