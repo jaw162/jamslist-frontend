@@ -60,14 +60,14 @@ export default function Header() {
           {!narrowScreen ? (
             <>
               <Box as="p">Jams</Box>
-              <Box as="p" color="red.600">
+              <Box as="p" color="blue.400">
                 list
               </Box>
             </>
           ) : (
             <>
               <Box as="p">J</Box>
-              <Box as="p" color="red.600">
+              <Box as="p" color="blue.400">
                 List
               </Box>
             </>
