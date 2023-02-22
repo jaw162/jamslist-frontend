@@ -28,7 +28,7 @@ export default function AllConvosDisplay({
     <>
       {messages.length
         ? messages.map(el => {
-            const sentAt = new Date(el.messages[0].createdAt);
+            const sentAt = new Date(el.messages[0].createdAt ?? new Date());
             return (
               <Flex
                 key={el.id}
@@ -56,9 +56,9 @@ export default function AllConvosDisplay({
                   borderRadius={"5px"}
                 >
                   <Box>
-                    <Box>{el?.user[0].username}</Box>
-                    <Box>{el?.messages[0].title}</Box>
-                    <Box>{el?.messages[0].content}</Box>
+                    <Box>{el?.user[0].username ?? "-"}</Box>
+                    <Box>{el?.messages[0].title ?? "-"}</Box>
+                    <Box>{el?.messages[0].content ?? "-"}</Box>
                     <Box>{date.format(sentAt, "DD/MM/YY MM:HH")}</Box>
                   </Box>
                   {el?.messages[0].read ||
