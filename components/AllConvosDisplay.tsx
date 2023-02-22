@@ -56,13 +56,13 @@ export default function AllConvosDisplay({
                   borderRadius={"5px"}
                 >
                   <Box>
-                    <Box>{el.user[0].username}</Box>
-                    <Box>{el.messages[0].title}</Box>
-                    <Box>{el.messages[0].content}</Box>
+                    <Box>{el?.user[0].username}</Box>
+                    <Box>{el?.messages[0].title}</Box>
+                    <Box>{el?.messages[0].content}</Box>
                     <Box>{date.format(sentAt, "DD/MM/YY MM:HH")}</Box>
                   </Box>
-                  {el.messages[0].read ||
-                  el.messages[0].authorId === userId ? null : (
+                  {el?.messages[0].read ||
+                  el?.messages[0].authorId === userId ? null : (
                     <BellIcon color={"blue.700"} />
                   )}
                 </Flex>
