@@ -61,7 +61,7 @@ export default function AllConvosDisplay({
                     <Box>{otherUser.username}</Box>
                     <Box>{el.messages[0].title}</Box>
                     <Box>{el.messages[0].content}</Box>
-                    <Box>{date.format(sentAt, "DD/MM/YY MM:HH")}</Box>
+                    <Box>{date.format(sentAt, "DD/MM/YY HH:MM")}</Box>
                   </Box>
                   {el?.messages[0].read ||
                   el?.messages[0].authorId === userId ? null : (
