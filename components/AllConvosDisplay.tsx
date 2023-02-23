@@ -29,13 +29,15 @@ export default function AllConvosDisplay({
       {messages.length
         ? messages.map(el => {
             const sentAt = new Date(el.messages[0].createdAt);
-            // const [otherUser] = el.user.filter(user => user.id !== userId);
+            const [otherUser] = el.user.filter(user => user.id !== userId);
+            console.log(otherUser);
 
             return (
               <Flex
                 key={el.id}
                 justifyContent={"flex-start"}
                 alignItems={"center"}
+                m={"1rem 0"}
               >
                 <Flex
                   alignItems={"center"}
@@ -58,7 +60,7 @@ export default function AllConvosDisplay({
                   borderRadius={"5px"}
                 >
                   <Box>
-                    {/* <Box>{otherUser.username}</Box> */}
+                    <Box>{otherUser.username}</Box>
                     <Box>{el.messages[0].title}</Box>
                     <Box>{el.messages[0].content}</Box>
                     <Box>{date.format(sentAt, "DD/MM/YY HH:MM")}</Box>
